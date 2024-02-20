@@ -1,0 +1,38 @@
+{% load static %}
+<!-- ^ команда для загрузки статики -->
+<html>
+    <head>
+        <title>Django blog</title>
+        <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400"
+rel="stylesheet">
+        <!-- ^ добавляет пользовательский шрифт доступный по ссылке -->
+        <link href="{% static 'css/base.css' %}" rel="stylesheet">
+        <!-- ^ укзазывает путь к файлу из которого нужно взять найстроки статики -->
+    </head>
+    <body>
+        <header>
+            <div class="nav-left">
+                <h1><a href={% url 'home' %}>Home</a></h1>
+            </div>
+            <div>
+                <p align="right"><a href="/admin/">Admin page</a></p>
+                <p align="right"><a href="{% url 'post_new' %}">+ New Blog Post</a></p>
+            </div>
+        </header>
+        {% if user.is_authenticated %}
+            <p>Hi {{ user.username }}!</p>
+            <a href="{% url 'logout' %}">Logout</a>
+        {% else %}
+            <p>You are not logged in.</p>
+            <p><a href="{% url 'login' %}">Log in</a></p>
+            <p><a href="{% url 'signup' %}">Sign Up</a></p>
+        {% endif %}
+        <hr width="0">
+        <hr width="0">
+        <hr>
+        <div>
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </body>
+</html>
